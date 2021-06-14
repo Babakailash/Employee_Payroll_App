@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', (event)=> {
     salary.addEventListener('input', function(){
         output.textContent = salary.value;
     });
-
+/* Date Validation */
     const startDate = document.querySelector('#startDate');
     const dateError = document.querySelector('.date-error');
     startDate.addEventListener('input', function(){
@@ -36,3 +36,52 @@ window.addEventListener('DOMContentLoaded', (event)=> {
         }
     });
 });
+
+/* UC3 Object on Save */
+const save = () => {
+    try {
+        let employeePayrollData = createEmployeePayroll();
+    } catch (e) {
+        return;
+    }
+}
+
+const createEmployeePayroll = () => {
+    let employeePayrollData = new EmployeePayrollData();
+    try {
+        employeePayrollData.name = getInputValueById('#name');
+    } catch (e) {
+        setTextValue('.text-error', e);
+        throw e;
+    }
+    employeePayrollData.profilePic = getSelectedValues('[name=profile]').pop();
+    employeePayrollData.gender = getSelectedValues('[name=gender]').pop();
+    employeePayrollData.department = getSelectedValues('[name=department]');
+    employeePayrollData.salary = getSelectedValues('#salary');
+    employeePayrollData.note = getSelectedValues('#notes');
+    let date = getInputValueById('#day')+" "+getInputValueById('#month')+" "+
+               getInputValueById('#year');
+    employeePayrollData.date = Date.parse(date);
+    alert(employeePayrollData.toString());
+    return employeePayrollData;           
+}
+/* helper method*/
+const getSelectedValues = (propertyValue) => {
+    let allItems = document.querySelectorAll(propertyValue);
+    let setItems=[];
+    allItems.forEach(item => {
+        if (item.checked) setItems.push(item.value);
+    });
+    return setItems;
+}
+
+const getInputValueById = (id) => {
+    let value = document.querySelector(id).value;
+    return value;
+}
+/*getElementById is better supported than querySelector in older version
+of the browsers , its only allows to select an element by its id(#name)*/
+const getInputElementValue = (id) => {
+    let value = document.getElementById(id).value;
+    return value;
+}
