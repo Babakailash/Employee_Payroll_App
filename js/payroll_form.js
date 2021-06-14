@@ -20,4 +20,19 @@ window.addEventListener('DOMContentLoaded', (event)=> {
     salary.addEventListener('input', function(){
         output.textContent = salary.value;
     });
+
+    const startDate = document.querySelector('#startDate');
+    const dateError = document.querySelector('.date-error');
+    startDate.addEventListener('input', function(){
+        if(startDate.value.id==null){
+           dateError.dateContent="";
+           return;
+        }
+        try {
+            (new EmployeePayrollData()).startDate = startDate.value;;
+            dateError.dateContent="";
+        } catch (e) {
+            dateError.dateContent=e;
+        }
+    });
 });
