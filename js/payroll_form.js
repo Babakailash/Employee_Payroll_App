@@ -37,13 +37,26 @@ window.addEventListener('DOMContentLoaded', (event)=> {
     });
 });
 
-/* UC3 Object on Save */
+/* UC3 Object on Save  and use UC4 for Local Storage*/
 const save = () => {
     try {
         let employeePayrollData = createEmployeePayroll();
+        createAndUpdateStorage(employeePayrollData);
     } catch (e) {
         return;
     }
+}
+/*+ UC4 method use for LocalStorage */
+function createAndUpdateStorage(employeePayrollData) {
+    let employeePayrollList = JSON.parse(localStorage.getItem("employeePayrollList"));
+
+    if (employeePayrollList != undefined){
+        employeePayrollList.push(employeePayrollData);
+    } else {
+        employeePayrollList = [employeePayrollData]
+    }
+    alert(employeePayrollList.toString());
+    localStorage.setItem("EmployeePayrollList", JSON.stringify(employeePayrollList))
 }
 
 const createEmployeePayroll = () => {
