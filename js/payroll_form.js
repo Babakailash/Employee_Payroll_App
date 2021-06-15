@@ -108,7 +108,7 @@ const resetForm = () => {
     setValue('#notes', '');
     setValue('#day','1');
     setValue('#month','January');
-    setValue('#year','2020');
+    setValue('#year','2020');  
 }
 
 const unsetSelectedValues = (propertyValue)=> {
