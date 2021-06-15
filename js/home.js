@@ -1,13 +1,24 @@
+//UC-6 view details from Local Storage
+let empPayrollList
 window.addEventListener('DOMContentLoaded', (event) => {
+    empPayrollList = getEmployeePayrollDataFromStorage();
+    document.querySelector(".emp-count").textContent = empPayrollList.length;
     createInnerHtml();
 });
+
+const getEmployeePayrollDataFromStorage = () => {
+    return localStorage.getItem('EmployeePayrollList') ?
+                        JSON.parse(localStorage.getItem('EmployeePayrollList')) : [];
+}
+
 /*Template literal ES6 features*/
 const createInnerHtml = () => {
+    if (empPayrollList.length ==0) return;
+
     const headerHtml = "<th></th><th>Name</th><th>Gender</th><th>Department</th>" +
                        "<th>Salary</th><th>Start Date</th><th>Actions</th>"
     //UC-5 JSON
     let innerHtml = `${headerHtml}`;
-    let empPayrollList = createEmployeePayrollJSON();
     for (const empPayrollData of empPayrollList) {
         innerHtml = `${innerHtml}
     
@@ -21,44 +32,13 @@ const createInnerHtml = () => {
         <td>${empPayrollData._salary}</td>
         <td>${empPayrollData._startDate}</td>
         <td>
-            <img name="${empPayrollData._id}" onclick="remove(this)" src="../assets/icons/delete-black-18dp.svg">
-            <img name="${empPayrollData._id}" onclick="update(this)" src="../assets/icons/create-black-18dp.svg">
+            <img name="${empPayrollData._id}" onclick="remove(this)" src="../assets/icons/delete-black-18dp.svg" alt="delete">
+            <img name="${empPayrollData._id}" onclick="update(this)" src="../assets/icons/create-black-18dp.svg" alt="edit">
         </td>
       </tr>
        `;
       }
         document.querySelector('#table-display').innerHTML = innerHtml;
-}
-
-const createEmployeePayrollJSON = () => {
-    let empPayrollListLocal = [
-        {
-            _name:'Kailashnath Vishwakarma',
-            _gender: 'male',
-            _department: [
-                'Engineering',
-                'Finance'
-            ],
-            _salary:'500000',
-            _startDate: '08 Oct 2018',
-            _note: '',
-            _id: new Date().getTime(),
-            _profilePic: '../assets/profile-images/Ellipse -2.png'
-        },
-        {
-            _name:'shupnakha',
-            _gender: 'female',
-            _department: [
-                'Sales',
-            ],
-            _salary:'400000',
-            _startDate: '31 Oct 2019',
-            _note: '',
-            _id: new Date().getTime() + 1,
-            _profilePic: '../assets/profile-images/Ellipse -1.png'   
-        }
-    ];
-    return empPayrollListLocal;
 }
 
 const getDeptHtml = (deptList)=> {
