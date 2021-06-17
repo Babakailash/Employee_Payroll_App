@@ -20,21 +20,6 @@ window.addEventListener('DOMContentLoaded', (event)=> {
     salary.addEventListener('input', function(){
         output.textContent = salary.value;
     });
-/* Date Validation */
-    const startDate = document.querySelector('#startDate');
-    const dateError = document.querySelector('.date-error');
-    startDate.addEventListener('input', function(){
-        if(startDate.value.id==null){
-           dateError.dateContent="";
-           return;
-        }
-        try {
-            (new EmployeePayrollData()).startDate = startDate.value;;
-            dateError.dateContent="";
-        } catch (e) {
-            dateError.dateContent=e;
-        }
-    });
 });
 
 /* UC3 Object on Save  and use UC4 for Local Storage*/
@@ -48,7 +33,7 @@ const save = () => {
 }
 /*+ UC4 method use for LocalStorage */
 function createAndUpdateStorage(employeePayrollData) {
-    let employeePayrollList = JSON.parse(localStorage.getItem("employeePayrollList"));
+    let employeePayrollList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
 
     if (employeePayrollList != undefined){
         employeePayrollList.push(employeePayrollData);
@@ -70,8 +55,8 @@ const createEmployeePayroll = () => {
     employeePayrollData.profilePic = getSelectedValues('[name=profile]').pop();
     employeePayrollData.gender = getSelectedValues('[name=gender]').pop();
     employeePayrollData.department = getSelectedValues('[name=department]');
-    employeePayrollData.salary = getSelectedValues('#salary');
-    employeePayrollData.note = getSelectedValues('#notes');
+    employeePayrollData.salary = getInputValueById('#salary');
+    employeePayrollData.note = getInputValueById('#notes');
     let date = getInputValueById('#day')+" "+getInputValueById('#month')+" "+
                getInputValueById('#year');
     employeePayrollData.date = Date.parse(date);
